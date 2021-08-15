@@ -24,7 +24,13 @@ lazy val commonSettings = Seq(
 
 lazy val root = (project in file("."))
   .settings(commonSettings)
-  .aggregate(domain, usecase, secondaryAdapter, primaryAdapter)
+  .aggregate(shared, domain, usecase, secondaryAdapter, primaryAdapter)
+
+lazy val shared = (project in file("modules/shared"))
+  .settings(
+    commonSettings,
+    name := "librame-shared"
+  )
 
 lazy val domain = (project in file("modules/domain"))
   .settings(
@@ -35,6 +41,7 @@ lazy val domain = (project in file("modules/domain"))
       "com.mohiva"    %% "play-silhouette-password-bcrypt" % "7.0.0"
     )
   )
+  .dependsOn(shared)
 
 lazy val usecase = (project in file("modules/usecase"))
   .settings(
@@ -45,7 +52,7 @@ lazy val usecase = (project in file("modules/usecase"))
       "org.atnos" %% "eff-cats-effect" % "5.12.0"
     )
   )
-  .dependsOn(domain)
+  .dependsOn(shared, domain)
 
 lazy val secondaryAdapter = (project in file("modules/secondary-adapter"))
   .settings(
@@ -59,11 +66,11 @@ lazy val secondaryAdapter = (project in file("modules/secondary-adapter"))
       "com.typesafe.play"     %% "play-jdbc"            % "2.8.2"
     )
   )
-  .dependsOn(domain, usecase)
+  .dependsOn(shared, domain, usecase)
 
 lazy val primaryAdapter = (project in file("modules/primary-adapter"))
   .settings(
     commonSettings,
     name := "librame-primary-adapter"
   )
-  .dependsOn(domain, usecase, secondaryAdapter)
+  .dependsOn(shared, domain, usecase, secondaryAdapter)
