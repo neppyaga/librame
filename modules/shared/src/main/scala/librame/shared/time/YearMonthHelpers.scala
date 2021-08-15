@@ -17,7 +17,7 @@ trait YearMonthHelpers {
     def >=(that: YearMonth): Boolean =
       yearMonth.isAfter(that) || yearMonth.equals(that)
 
-    def diffOfMonth(that: YearMonth): Int =
+    def getMonthUntilOf(that: YearMonth): Int =
       ChronoUnit.MONTHS.between(yearMonth, that).toInt
   }
 }

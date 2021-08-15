@@ -103,7 +103,7 @@ class YearMonthHelpersSpec extends AnyFreeSpec {
     }
   }
 
-  "#diffOfMonth" - {
+  "#getMonthUntilOf" - {
     trait Setup {
       val yearMonth = YearMonth.now()
     }
@@ -111,21 +111,21 @@ class YearMonthHelpersSpec extends AnyFreeSpec {
       val yearMonth1 = yearMonth.withYear(2021).withMonth(8)
       val yearMonth2 = yearMonth.withYear(2021).withMonth(9)
 
-      val result = yearMonth1.diffOfMonth(yearMonth2)
+      val result = yearMonth1.getMonthUntilOf(yearMonth2)
       result should be(1)
     }
     "年月1が2021年8月の場合、年月2として2021年7月が渡された時、-1を返す" in new Setup {
       val yearMonth1 = yearMonth.withYear(2021).withMonth(8)
       val yearMonth2 = yearMonth.withYear(2021).withMonth(7)
 
-      val result = yearMonth1.diffOfMonth(yearMonth2)
+      val result = yearMonth1.getMonthUntilOf(yearMonth2)
       result should be(-1)
     }
     "2つの年月が等しい場合、0を返す" in new Setup {
       val yearMonth1 = yearMonth.withYear(2021).withMonth(8)
       val yearMonth2 = yearMonth.withYear(2021).withMonth(8)
 
-      val result = yearMonth1.diffOfMonth(yearMonth2)
+      val result = yearMonth1.getMonthUntilOf(yearMonth2)
       result should be(0)
     }
   }
