@@ -22,8 +22,8 @@
 package librame.domain.model.util
 
 trait Enum
-trait IntEnum    extends Enum { val code: Int    }
-trait StringEnum extends Enum { val code: String }
+trait EnumInt    extends Enum { val code: Int    }
+trait EnumString extends Enum { val code: String }
 
 object Enum {
   abstract class Of[T <: Enum] {
@@ -31,14 +31,16 @@ object Enum {
   }
 }
 
-object IntEnum {
-  abstract class Of[T <: IntEnum] extends Enum.Of[T] {
-    def apply(code: Int): T = values.find(_.code == code).get
+object EnumInt {
+  abstract class Of[T <: EnumInt] extends Enum.Of[T] {
+    def unsafeApply(code: Int): T         = values.find(_.code == code).get
+    def apply(code: Int): Either[Unit, T] = values.find(_.code == code).toRight(())
   }
 }
 
-object StringEnum {
-  abstract class Of[T <: StringEnum] extends Enum.Of[T] {
-    def apply(code: String): T = values.find(_.code == code).get
+object EnumString {
+  abstract class Of[T <: EnumString] extends Enum.Of[T] {
+    def unsafeApply(code: String): T         = values.find(_.code == code).get
+    def apply(code: String): Either[Unit, T] = values.find(_.code == code).toRight(())
   }
 }
