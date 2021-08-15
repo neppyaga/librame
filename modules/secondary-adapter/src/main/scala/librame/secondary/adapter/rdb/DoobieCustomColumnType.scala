@@ -63,24 +63,24 @@ trait DoobieCustomColumnType {
     Write[(BigDecimal, Currency)].contramap(p => (p.money.value, p.money.currency))
 
   /** util string enum object */
-  implicit def stringEnumGet[T <: StringEnum](implicit tag: ClassTag[T]): Get[T] =
+  implicit def stringEnumGet[T <: EnumString](implicit tag: ClassTag[T]): Get[T] =
     Get[String].map { str =>
       tag.runtimeClass
         .getConstructor(classOf[String])
         .newInstance(str)
         .asInstanceOf[T]
     }
-  implicit def stringEnumPut[T <: StringEnum]: Put[T]                            =
+  implicit def stringEnumPut[T <: EnumString]: Put[T]                            =
     Put[String].contramap(_.code)
 
   /** util int enum object */
-  implicit def intEnumGet[T <: IntEnum](implicit tag: ClassTag[T]): Get[T] =
+  implicit def intEnumGet[T <: EnumInt](implicit tag: ClassTag[T]): Get[T] =
     Get[Int].map { int =>
       tag.runtimeClass
         .getConstructor(classOf[Int])
         .newInstance(int)
         .asInstanceOf[T]
     }
-  implicit def intEnumPut[T <: IntEnum]: Put[T]                            =
+  implicit def intEnumPut[T <: EnumInt]: Put[T]                            =
     Put[Int].contramap(_.code)
 }

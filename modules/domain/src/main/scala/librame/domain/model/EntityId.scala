@@ -21,34 +21,12 @@
 
 package librame.domain.model
 
-import java.util.UUID
+trait EntityId[T] extends SingleValueObject[T]
 
-import scala.reflect.ClassTag
-
-trait EntityId extends SingleValueObject[UUID] {
-  val value: UUID
+trait EntityIdString extends EntityId[String] {
+  val value: String
 }
 
-object EntityId {
-
-  /** @param tag
-    * @tparam T
-    * @return
-    */
-  def generate[T <: EntityId](implicit tag: ClassTag[T]): T =
-    tag.runtimeClass
-      .getConstructor(classOf[UUID])
-      .newInstance(UUID.randomUUID)
-      .asInstanceOf[T]
-
-  /** @param str
-    * @param tag
-    * @tparam T
-    * @return
-    */
-  def fromString[T <: EntityId](str: String)(implicit tag: ClassTag[T]): T =
-    tag.runtimeClass
-      .getConstructor(classOf[UUID])
-      .newInstance(UUID.fromString(str))
-      .asInstanceOf[T]
+trait EntityIdLong extends EntityId[Long] {
+  val value: Long
 }

@@ -1,49 +1,30 @@
 package librame.domain.model
 
-import java.util.UUID
 import org.scalatest.FunSuite
 
 class EntityIdTest extends FunSuite {
-  
+
+  case class EntityAId(value: String) extends EntityIdString
+  case class EntityBId(value: String) extends EntityIdString
+
   test("違う型の場合等しくない") {
-    case class EntityA(id: EntityA.Id)
-    object EntityA { case class Id(value: UUID) extends EntityId }
+    val entityAId: EntityAId = EntityAId("ENTITY_A_ID")
+    val entityBId: EntityBId = EntityBId("ENTITY_B_ID")
 
-    case class EntityB(id: EntityB.Id)
-    object EntityB { case class Id(value: UUID) extends EntityId }
-
-    val entityA: EntityA =
-      EntityA(id = EntityA.Id(UUID.randomUUID))
-
-    val entityB: EntityB =
-      EntityB(id = EntityB.Id(UUID.randomUUID))
-
-    assert(entityA.id != entityB.id)
+    assert(entityAId != entityBId)
   }
 
   test("同じ型でIdの値が等しくない") {
-    case class EntityA(id: EntityA.Id)
-    object EntityA { case class Id(value: UUID) extends EntityId }
+    val entityAId1: EntityAId = EntityAId("ENTITY_A_ID_VALUE1")
+    val entityAId2: EntityAId = EntityAId("ENTITY_A_ID_VALUE2")
 
-    val entity1: EntityA =
-      EntityA(id = EntityA.Id(UUID.randomUUID))
-
-    val entity2: EntityA =
-      EntityA(id = EntityA.Id(UUID.randomUUID))
-
-    assert(entity1.id != entity2.id)
+    assert(entityAId1 != entityAId2)
   }
 
   test("同じ型でIdの値が等しい") {
-    case class EntityA(id: EntityA.Id)
-    object EntityA { case class Id(value: UUID) extends EntityId }
+    val entityAId1: EntityAId = EntityAId("ENTITY_A_ID_VALUE")
+    val entityAId2: EntityAId = EntityAId("ENTITY_A_ID_VALUE")
 
-    val entity1: EntityA =
-      EntityA(id = EntityA.Id(UUID.fromString("698176dc-4028-4638-a452-f00bf62a7781")))
-
-    val entity2: EntityA =
-      EntityA(id = EntityA.Id(UUID.fromString("698176dc-4028-4638-a452-f00bf62a7781")))
-
-    assert(entity1.id == entity2.id)
+    assert(entityAId1 == entityAId2)
   }
 }

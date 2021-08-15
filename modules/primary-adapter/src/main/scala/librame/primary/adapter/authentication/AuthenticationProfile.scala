@@ -36,7 +36,7 @@ import librame.secondary.adapter.kvs.CacheRepository
 /** @param ec
   * @tparam T
   */
-abstract class AuthenticationProfile[T <: EntityId]()(implicit ec: ExecutionContext) {
+abstract class AuthenticationProfile[T <: EntityId[_]]()(implicit ec: ExecutionContext) {
 
   object AttrKeys {
     val Auth: TypedKey[T] = TypedKey("Authentication")

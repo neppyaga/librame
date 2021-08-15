@@ -21,13 +21,13 @@
 
 package librame.domain.model.market
 
-import librame.domain.model.util.StringEnum
+import librame.domain.model.util.EnumString
 
 /** @param code
   */
-abstract class Currency(val code: String) extends StringEnum
+abstract class Currency(val code: String) extends EnumString
 
-object Currency extends StringEnum.Of[Currency] {
+object Currency extends EnumString.Of[Currency] {
   case object JPY extends Currency("JPY")
   case object USD extends Currency("USD")
 
