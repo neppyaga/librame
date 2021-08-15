@@ -29,7 +29,7 @@ import librame.domain.model.EntityId
 
 /** @tparam T
   */
-trait AuthenticateExtension[T <: EntityId] { self: BaseControllerHelpers =>
+trait AuthenticateExtension[T <: EntityId[_]] { self: BaseControllerHelpers =>
 
   import ExecutionContext.Implicits.global
 
@@ -47,7 +47,7 @@ trait AuthenticateExtension[T <: EntityId] { self: BaseControllerHelpers =>
   * @param ec
   * @tparam T
   */
-case class AuthenticateActionBuilder[T <: EntityId](
+case class AuthenticateActionBuilder[T <: EntityId[_]](
   auth: AuthenticationProfile[T],
   parse: BodyParser[AnyContent]
 )(implicit ec: ExecutionContext)

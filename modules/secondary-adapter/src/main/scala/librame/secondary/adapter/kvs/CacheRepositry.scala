@@ -28,7 +28,7 @@ import librame.domain.model.EntityId
 
 /** @tparam T
   */
-trait CacheRepository[T <: EntityId] {
+trait CacheRepository[T <: EntityId[_]] {
 
   /** @param key
     * @param entityId
